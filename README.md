@@ -66,8 +66,3 @@ npm run dev
 
 前端开发服务器会通过 Vite 代理访问后端 `/api` 接口。
 
-## 安全说明
-
-- 数据库密码只通过环境变量提供，不要提交到 Git 或 GitHub。
-- `target/`、`node_modules/`、IDE 配置和本地环境文件已由根目录 `.gitignore` 忽略。
-- `test.http` 仅保留占位符账号，不包含可用凭据。
