@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>考试详情</title>
+</head>
+<body>
+
+<div th:replace="fragments/nav :: nav"></div>
+
+<h2>考试详情（exam_id = <span th:text="${examId}"></span>）</h2>
+
+<!-- ✅ 第4步：在这里加 summary 展示（放在 table 之前） -->
+<div th:if="${summary != null}">
+  <p>考试名称：<b th:text="${summary.examName}">examName</b></p>
+
+  <p th:if="${summary.submitTime != null}">
+    提交时间：<span th:text="${summary.submitTime}">submitTime</span>
+    &nbsp;|&nbsp;
+    总分：<b th:text="${summary.totalScore}">0</b>
+  </p>
+
+  <p th:if="${summary.submitTime == null}" style="color:#999;">
+    你尚未提交该考试（此页面展示题目与当前已保存的作答情况）。
+  </p>
+</div>
+
+<table border="1">
+  <tr>
+    <th>题号</th>
+    <th>题干</th>
+    <th>分值</th>
+    <th>我的答案</th>
+    <th>正确答案</th>
+    <th>判定</th>
+  </tr>
+
+  <tr th:each="q, stat : ${detail}">
+    <td th:text="${stat.index + 1}"></td>
+    <td th:text="${q.questionContent}"></td>
+    <td th:text="${q.score}"></td>
+    <td th:text="${q.myAnswer}"></td>
+    <td th:text="${q.correctAnswer}"></td>
+    <td>
+      <span th:if="${q.isCorrect == null}">未作答</span>
+      <span th:if="${q.isCorrect != null and q.isCorrect}">正确</span>
+      <span th:if="${q.isCorrect != null and !q.isCorrect}">错误</span>
+    </td>
+  </tr>
+</table>
+
+<p><a href="/me/exams">返回我的考试</a></p>
+<p><a href="/exams">返回考试列表</a></p>
+
+</body>
+</html>

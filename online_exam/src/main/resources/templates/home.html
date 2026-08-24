@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>在线考试系统 - 主页</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 30px; }
+    <div th:replace="fragments/nav :: nav"></div>
+    .wrap { max-width: 760px; }
+    .title { font-size: 26px; font-weight: 700; margin: 0 0 8px; }
+    .sub { color: #555; margin: 0 0 18px; }
+    .panel { border: 1px solid #ddd; border-radius: 8px; padding: 18px; }
+    .row { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; }
+    a.btn {
+      display: inline-block;
+      padding: 10px 14px;
+      border: 1px solid #333;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #111;
+      background: #fff;
+    }
+    a.btn:hover { background: #f4f4f4; }
+    .danger { border-color: #b00020; color: #b00020; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #eee; font-size: 12px; margin-left: 8px; }
+    .muted { color: #777; font-size: 13px; }
+    hr { border: none; border-top: 1px solid #eee; margin: 18px 0; }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="panel">
+    <div class="title">登录成功！欢迎来到在线考试系统</div>
+
+    <div class="sub">
+      你已经成功登录。
+      <span th:if="${session.loginUser != null}">
+        当前用户：<b th:text="${session.loginUser.username}">username</b>
+        <span class="tag" th:text="${session.loginUser.role}">role</span>
+      </span>
+    </div>
+
+    <div class="row">
+      <a class="btn" href="/exams">进入考试列表</a>
+    </div>
+
+    <!-- 教师导航 -->
+    <div th:if="${session.loginUser != null and session.loginUser.role != null and session.loginUser.role.toLowerCase() == 'teacher'}">
+      <hr>
+      <div><b>教师功能</b></div>
+      <div class="row">
+        <!-- ✅ 创建考试：一定要去 createPage -->
+        <a class="btn" href="/exams/createPage">创建考试</a>
+
+        <!-- ✅ 管理考试：就是考试列表 -->
+        <a class="btn" href="/exams">管理考试（添加题目 / 查看题目 / 查看成绩）</a>
+      </div>
+      <div class="muted">提示：进入“管理考试/考试列表”后，每个考试右侧都有对应操作入口。</div>
+    </div>
+
+    <!-- 学生导航 -->
+    <div th:if="${session.loginUser != null and session.loginUser.role != null and session.loginUser.role.toLowerCase() == 'student'}">
+      <hr>
+      <div><b>学生功能</b></div>
+      <div class="row">
+        <a class="btn" href="/me/exams">我的考试 / 成绩</a>
+        <a class="btn" href="/exams">参加考试（从考试列表进入）</a>
+      </div>
+    </div>
+
+    <hr>
+    <div class="row">
+      <a class="btn danger" href="/user/logout">退出登录</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

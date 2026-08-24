@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>学生作答详情</title>
+</head>
+<body>
+
+<div th:replace="fragments/nav :: nav"></div>
+
+<h2>
+    学生作答详情（exam_id =
+    <span th:text="${examId}"></span>,
+    student_id =
+    <span th:text="${studentId}"></span>）
+</h2>
+
+<table border="1">
+    <tr>
+        <th>题号</th>
+        <th>题干</th>
+        <th>分值</th>
+        <th>学生答案</th>
+        <th>正确答案</th>
+        <th>判定</th>
+        <th>本题得分</th>
+    </tr>
+
+    <tr th:each="q, stat : ${detail}">
+        <td th:text="${stat.index + 1}"></td>
+        <td th:text="${q.questionContent}"></td>
+        <td th:text="${q.score}"></td>
+        <td th:text="${q.studentAnswer}"></td>
+        <td th:text="${q.correctAnswer}"></td>
+        <td>
+            <span th:if="${q.isCorrect == null}">未作答</span>
+            <span th:if="${q.isCorrect != null and q.isCorrect}">正确</span>
+            <span th:if="${q.isCorrect != null and !q.isCorrect}">错误</span>
+        </td>
+        <td th:text="${q.earnedScore}"></td>
+    </tr>
+</table>
+
+<p>
+    <a th:href="@{'/exams/' + ${examId} + '/submissions'}">返回成绩列表</a>
+</p>
+
+</body>
+</html>

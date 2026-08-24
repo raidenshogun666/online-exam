@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>我的考试</title>
+</head>
+<body>
+
+<h2>我的考试记录</h2>
+
+<table border="1">
+  <tr>
+    <th>考试ID</th>
+    <th>考试名称</th>
+    <th>提交时间</th>
+    <th>总分</th>
+    <th>操作</th>
+  </tr>
+
+  <tr th:each="e : ${myExams}">
+    <td th:text="${e.examId}"></td>
+    <td th:text="${e.examName}"></td>
+    <td th:text="${e.submitTime}"></td>
+    <td th:text="${e.totalScore}"></td>
+    <td>
+      <a th:href="@{'/me/exams/' + ${e.examId}}">查看详情</a>
+    </td>
+  </tr>
+</table>
+
+<p><a href="/exams">返回考试列表</a></p>
+
+</body>
+</html>

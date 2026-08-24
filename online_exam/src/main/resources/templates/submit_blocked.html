@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>提交被拒绝</title>
+</head>
+<body>
+
+<div th:replace="fragments/nav :: nav"></div>
+
+<h2>提交被拒绝</h2>
+<p th:text="${message}">该考试禁止重复提交，你已提交过。</p>
+
+<p><a href="/exams">返回考试列表</a></p>
+
+</body>
+</html>

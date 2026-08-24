@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>参加考试</title>
+</head>
+<body>
+<div th:replace="fragments/nav :: nav"></div>
+<h2>参加考试（exam_id = <span th:text="${examId}"></span>）</h2>
+
+<form th:action="@{'/exams/' + ${examId} + '/submit'}" method="post">
+  <div th:if="${#lists.isEmpty(questions)}">
+    <p>该考试暂无题目，无法参加。</p>
+  </div>
+
+  <div th:each="q, stat : ${questions}">
+    <hr>
+    <p>
+      <b th:text="'第 ' + ${stat.index + 1} + ' 题：'"></b>
+      <span th:text="${q.content}"></span>
+      （<span th:text="${q.score}"></span> 分）
+    </p>
+
+    <div th:each="op : ${q.options}">
+      <label>
+        <input type="radio"
+               th:name="${'answer_' + q.questionId}"
+               th:value="${op.optionId}"
+               required>
+        <span th:text="${op.content}"></span>
+      </label>
+      <br>
+    </div>
+  </div>
+
+  <br>
+  <button type="submit">提交试卷</button>
+</form>
+
+<p><a href="/exams">返回考试列表</a></p>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>考试列表</title>
+</head>
+<body>
+
+<div th:replace="fragments/nav :: nav"></div>
+
+<h2>考试列表</h2>
+
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>考试名称</th>
+    <th>开始时间</th>
+    <th>结束时间</th>
+    <th>时长(分钟)</th>
+    <th>创建者ID</th>
+    <th>状态</th>
+    <th>操作</th>
+  </tr>
+
+  <tr th:each="exam : ${examList}">
+    <td th:text="${exam.examId}"></td>
+    <td th:text="${exam.examName}"></td>
+    <td th:text="${exam.startTime}"></td>
+    <td th:text="${exam.endTime}"></td>
+    <td th:text="${exam.duration}"></td>
+    <td th:text="${exam.creatorId}"></td>
+
+    <td>
+      <span th:if="${exam.status == 'NOT_STARTED'}">未开始</span>
+      <span th:if="${exam.status == 'IN_PROGRESS'}">进行中</span>
+      <span th:if="${exam.status == 'ENDED'}">已结束</span>
+    </td>
+
+    <td>
+      <!-- Teacher 操作 -->
+      <span th:if="${session.loginUser != null and session.loginUser.role != null and session.loginUser.role.toLowerCase() == 'teacher'}">
+        <a th:href="@{'/exams/' + ${exam.examId} + '/questions/addPage'}">添加题目</a>
+        |
+        <a th:href="@{'/exams/' + ${exam.examId} + '/questions'}">查看题目</a>
+        |
+        <a th:href="@{'/exams/' + ${exam.examId} + '/submissions'}">查看成绩</a>
+      </span>
+
+      <!-- Student 操作：只有进行中才允许参加 -->
+      <span th:if="${session.loginUser != null and session.loginUser.role != null and session.loginUser.role.toLowerCase() == 'student'}">
+        <span th:if="${exam.status == 'IN_PROGRESS'}">
+          <a th:href="@{'/exams/' + ${exam.examId} + '/take'}">参加考试</a>
+        </span>
+        <span th:if="${exam.status != 'IN_PROGRESS'}" style="color: #999;">
+          不可参加
+        </span>
+      </span>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

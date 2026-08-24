@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>提交成功</title>
+</head>
+<body>
+<div th:replace="fragments/nav :: nav"></div>
+<h2>提交成功</h2>
+<p>考试（exam_id = <span th:text="${examId}"></span>）已提交。</p>
+<p>本次得分：<b th:text="${totalScore}"></b></p>
+
+<p><a href="/exams">返回考试列表</a></p>
+
+</body>
+</html>

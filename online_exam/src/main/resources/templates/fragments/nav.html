@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>nav</title>
+</head>
+<body>
+<div th:fragment="nav">
+    <div style="padding:10px;border-bottom:1px solid #ddd;margin-bottom:18px;">
+        <a href="/user/home">主页</a>
+        &nbsp;|&nbsp;
+        <a href="/exams">考试列表</a>
+
+        <span th:if="${session.loginUser != null and session.loginUser.role != null and session.loginUser.role.toLowerCase() == 'student'}">
+            &nbsp;|&nbsp;
+            <a href="/me/exams">我的考试</a>
+        </span>
+
+        <span th:if="${session.loginUser != null and session.loginUser.role != null and session.loginUser.role.toLowerCase() == 'teacher'}">
+            &nbsp;|&nbsp;
+            <a href="/exams/createPage">创建考试</a>
+        </span>
+
+        <span style="float:right" th:if="${session.loginUser != null}">
+            用户：<b th:text="${session.loginUser.username}">username</b>
+            (<span th:text="${session.loginUser.role}">role</span>)
+            &nbsp;|&nbsp;
+            <a href="/user/logout">退出登录</a>
+        </span>
+    </div>
+</div>
+</body>
+</html>

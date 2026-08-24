@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>创建考试</title>
+</head>
+<body>
+
+<div th:replace="fragments/nav :: nav"></div>
+
+<h2>创建考试（教师）</h2>
+
+<form action="/exams/create" method="post">
+  <div>
+    考试名称：<input type="text" name="examName" required>
+  </div>
+  <div>
+    开始时间：<input type="datetime-local" name="startTime" required>
+  </div>
+  <div>
+    结束时间：<input type="datetime-local" name="endTime" required>
+  </div>
+  <div>
+    时长(分钟)：<input type="number" name="duration" min="1" required>
+  </div>
+
+  <!-- ✅ 新增：提交策略 -->
+  <div>
+    提交策略：
+    <select name="submitPolicy">
+      <option value="OVERWRITE" selected>允许重复提交（覆盖）</option>
+      <option value="NO_REPEAT">禁止重复提交</option>
+    </select>
+  </div>
+
+  <div>
+    <button type="submit">创建</button>
+  </div>
+</form>
+
+<p><a href="/exams">返回考试列表</a></p>
+
+</body>
+</html>
